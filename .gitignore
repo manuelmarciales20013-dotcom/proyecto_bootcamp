@@ -1,0 +1,48 @@
+# ==============================================================================
+# GitIgnore - TikTok Data Engineering Bootcamp
+# ==============================================================================
+
+# Entornos virtuales de Python
+.venv/
+venv/
+env/
+ENV/
+.Python
+
+# Caches y compilados de Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Variables de entorno y secretos
+.env
+.env.*
+*.env
+
+# IDEs
+.vscode/
+.idea/
+
+# Agentes y configuraciones internas
+.agents/
+
+# Databricks
+databricks.json
+*databricks*.json
+.databricks/
+
+# Specs y documentaciones de especificacion interna (no van al repo)
+*SPEC*.md
+SPEC_*.md
+SPEC_GENERAL.md
+specs/
+RULES.md
+eda_columns.txt
+
+# Datos crudos / temporales / JSON de ejemplo
+*.json
+!package.json
+!package-lock.json
