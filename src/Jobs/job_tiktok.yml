@@ -1,0 +1,57 @@
+resources:
+  jobs:
+    Pipeline_TikTok_Medallion_ETL:
+      name: Pipeline_TikTok_Medallion_ETL
+      tasks:
+        - task_key: Bronze_ETL
+          notebook_task:
+            notebook_path: /Workspace/Users/manuelmarciales20013@gmail.com/proyecto_personal/proyecto_bootcamp/src/ETL/Bronze/ETL_bronze
+            source: WORKSPACE
+          description: Carga cruda 1:1 desde Landing Volume hacia Bronze
+        - task_key: Silver_ETL
+          depends_on:
+            - task_key: Bronze_ETL
+          notebook_task:
+            notebook_path: /Workspace/Users/manuelmarciales20013@gmail.com/proyecto_personal/proyecto_bootcamp/src/ETL/Silver/ETL_silver
+            source: WORKSPACE
+          description: Limpieza, tipado y desanidado de hashtags en Silver
+        - task_key: dim_autor
+          depends_on:
+            - task_key: Silver_ETL
+          notebook_task:
+            notebook_path: /Workspace/Users/manuelmarciales20013@gmail.com/proyecto_personal/proyecto_bootcamp/src/ETL/Gold/ETL_dim_autor
+            source: WORKSPACE
+          description: Carga y deduplicación de autores en dim_autor
+        - task_key: dim_fecha
+          depends_on:
+            - task_key: Silver_ETL
+          notebook_task:
+            notebook_path: /Workspace/Users/manuelmarciales20013@gmail.com/proyecto_personal/proyecto_bootcamp/src/ETL/Gold/ETL_dim_fecha
+            source: WORKSPACE
+          description: Generación de jerarquías de calendario en dim_fecha
+        - task_key: dim_hashtag
+          depends_on:
+            - task_key: Silver_ETL
+          notebook_task:
+            notebook_path: /Workspace/Users/manuelmarciales20013@gmail.com/proyecto_personal/proyecto_bootcamp/src/ETL/Gold/ETL_dim_hashtag
+            source: WORKSPACE
+          description: Extracción y cálculo de longitud en dim_hashtag
+        - task_key: bridge_video_hashtag
+          depends_on:
+            - task_key: dim_hashtag
+          notebook_task:
+            notebook_path: /Workspace/Users/manuelmarciales20013@gmail.com/proyecto_personal/proyecto_bootcamp/src/ETL/Gold/ETL_bridge_video_hashtag
+            source: WORKSPACE
+          description: Relación muchos-a-muchos video-hashtag con ID autoincremental
+        - task_key: fct_video_metricas
+          depends_on:
+            - task_key: dim_autor
+            - task_key: dim_fecha
+            - task_key: dim_hashtag
+          notebook_task:
+            notebook_path: /Workspace/Users/manuelmarciales20013@gmail.com/proyecto_personal/proyecto_bootcamp/src/ETL/Gold/ETL_fct_video_metricas
+            source: WORKSPACE
+          description: Métricas puras, cálculo de engagement_rate y resolución de FKs
+      queue:
+        enabled: true
+      performance_target: PERFORMANCE_OPTIMIZED
