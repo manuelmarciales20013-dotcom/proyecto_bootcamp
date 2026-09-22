@@ -102,23 +102,27 @@ flowchart TD
 
 ## 5. ¿Qué resultados tiene?
 
-### 📈 Métricas Clave del Dataset (Media Recortada al 5% — P05 a P95)
-> *Se aplicó un recorte de colas del 5% superior e inferior sobre reproducciones para eliminar el sesgo de outliers extremos (videos con 0 vistas vs. anomalías virales de +48M).*
+### 📈 Métricas Clave del Dataset (Limpio y Filtrado — Nicho Ingeniería de Datos)
+> *Se aplicó un doble criterio de calidad de datos en la capa Silver: (1) **Media Recortada (Trimmed Mean)** eliminando colas P05-P95 para mitigar outliers extremos, y (2) **Filtro Semántico Regex** para desambiguar el término homónimo `#data` y eliminar ruido musical (álbum "DATA" de Tainy/Bad Bunny y virales ajenos).*
 
 | Métrica | Valor Obtenido |
 |---|---|
-| **Total de Videos Analizados (Rango Central 90%)** | `1,553` videos únicos |
-| **Total de Reproducciones Acumuladas** | `829,705,269` (~830 Millones) |
-| **Total de Likes Acumulados** | `88,935,706` (~88.9 Millones) |
-| **Media Recortada de Vistas por Video** | `534,259` reproducciones *(vs. 791K sesgada)* |
-| **Media Recortada de Likes por Video** | `57,267` likes |
+| **Total de Videos Analizados (Ingeniería de Datos)** | `898` videos únicos |
+| **Total de Reproducciones Acumuladas** | `162,455,344` (~162.5 Millones) |
+| **Total de Likes Acumulados** | `12,822,114` (~12.8 Millones) |
+| **Media Recortada de Vistas por Video** | `180,908` reproducciones |
+| **Media Recortada de Likes por Video** | `14,279` likes |
+
+### 🛡️ Calidad de Datos: Desambiguación Semántica del Término `#data`
+Durante la extracción en Bronze con la búsqueda `#data`, se descubrió que TikTok asociaba el hashtag al álbum musical de reggaetón *"DATA"* del productor Tainy y Bad Bunny (canciones como *Mojabi Ghost*), trayendo cientos de videos musicales con millones de reproducciones irrelevantes.
+- **Solución implementada en Silver:** Regla de negocio en SQL mediante expresiones regulares (`RLIKE`) que valida que la descripción contenga vocabulario técnico del ecosistema de datos (`engineer`, `sql`, `python`, `etl`, `pipeline`, `spark`, `databricks`, `bi`, etc.) y excluye términos de música y entretenimiento (`badbunny`, `tainy`, `mojabi`, `lyrics`, `reggaeton`).
 
 ### 🏆 Hallazgos Principales (Insights)
-- **Top Creadores por Likes:** Liderado por cuentas especializadas en datos y tech como `@yuvaltheterrible` (1.85M likes), `@pablo.maxmaxdata` (1.78M likes) y `@naxride` (1.51M likes).
-- **Concentración Regional:** Estados Unidos (`US` con 265 videos), México (`MX` con 212) y Perú (`PE` con 158) lideran la producción neta de contenido en el nicho.
-- **Hashtags de Mayor Tracción:** `#data` y `#fyp` acumulan el mayor volumen total de vistas, mientras que etiquetas de nicho como `#ingenieriadedatos` y `#datascience` dominan la frecuencia de aparición comunitaria.
+- **Top Creadores por Likes:** Liderado legítimamente por educadores y profesionales del rubro como `@pablo.maxmaxdata` (947K likes), `@chartosaur` (546K likes), `@imelijahbutler` (363K likes), `@datachictiktok` (357K likes) y `@marytheanalyst` (294K likes).
+- **Concentración Regional:** Perú (`PE` con 138 videos), México (`MX` con 116), Estados Unidos (`US` con 116), España (`ES` con 83) y Reino Unido (`GB` con 81) concentran la producción de contenido técnico.
+- **Hashtags de Mayor Tracción:** `#ingenieriadedatos` (467 videos), `#data` técnico (273 videos), `#datascience` (258 videos), `#dataengineering` (212 videos) y `#dataengineer` (207 videos) dominan el ecosistema.
 
 ### 🖥️ Dashboard Ejecutivo (Patrón F)
-- **Cabecera Horizontal Superior:** 4 Scorecards de KPIs clave (Totales y Promedios recortados).
-- **Banda Intermedia:** Gráfico de barras del Top 5 de Regiones Geográficas con mayor volumen de videos (`US`, `MX`, `PE`, `GB`, `ES`).
+- **Cabecera Horizontal Superior:** 4 Scorecards de KPIs clave (Totales y Promedios limpios).
+- **Banda Intermedia:** Gráfico de barras del Top 5 de Regiones Geográficas (`PE`, `MX`, `US`, `ES`, `GB`).
 - **Bloque Vertical Inferior:** Rankings de Autores, Hashtags con más vistas, Hashtags récord de likes y Nube de términos.
