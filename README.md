@@ -103,24 +103,24 @@ flowchart TD
 ## 5. ¿Qué resultados tiene?
 
 ### 📈 Métricas Clave del Dataset (Limpio y Filtrado — Nicho Ingeniería de Datos)
-> *Se aplicó un doble criterio de calidad de datos en la capa Silver: (1) **Media Recortada (Trimmed Mean)** eliminando colas P05-P95 para mitigar outliers extremos, y (2) **Filtro Semántico Regex** para desambiguar el término homónimo `#data` y eliminar ruido musical (álbum "DATA" de Tainy/Bad Bunny y virales ajenos).*
+> *Se aplicó un doble criterio de calidad de datos en la capa Silver: (1) **Media Recortada (Trimmed Mean)** eliminando colas P05-P95 para mitigar outliers extremos, y (2) **Filtro de Relevancia Temática Positiva** enfocándose exclusivamente en búsquedas especializadas de ingeniería de datos para eliminar el sesgo de homonimia y ruido de entretenimiento.*
 
 | Métrica | Valor Obtenido |
 |---|---|
-| **Total de Videos Analizados (Ingeniería de Datos)** | `898` videos únicos |
-| **Total de Reproducciones Acumuladas** | `162,455,344` (~162.5 Millones) |
-| **Total de Likes Acumulados** | `12,822,114` (~12.8 Millones) |
-| **Media Recortada de Vistas por Video** | `180,908` reproducciones |
-| **Media Recortada de Likes por Video** | `14,279` likes |
+| **Total de Videos Analizados (Ingeniería de Datos)** | `775` videos únicos |
+| **Total de Reproducciones Acumuladas** | `13,180,396` (~13.2 Millones) |
+| **Total de Likes Acumulados** | `841,051` (~841 Mil) |
+| **Media Recortada de Vistas por Video** | `17,007` reproducciones |
+| **Media Recortada de Likes por Video** | `1,085` likes |
 
-### 🛡️ Calidad de Datos: Desambiguación Semántica del Término `#data`
-Durante la extracción en Bronze con la búsqueda `#data`, se descubrió que TikTok asociaba el hashtag al álbum musical de reggaetón *"DATA"* del productor Tainy y Bad Bunny (canciones como *Mojabi Ghost*), trayendo cientos de videos musicales con millones de reproducciones irrelevantes.
-- **Solución implementada en Silver:** Regla de negocio en SQL mediante expresiones regulares (`RLIKE`) que valida que la descripción contenga vocabulario técnico del ecosistema de datos (`engineer`, `sql`, `python`, `etl`, `pipeline`, `spark`, `databricks`, `bi`, etc.) y excluye términos de música y entretenimiento (`badbunny`, `tainy`, `mojabi`, `lyrics`, `reggaeton`).
+### 🛡️ Calidad de Datos: Eliminación del Sesgo de Homonimia (`#data`)
+Durante la ingesta inicial en Bronze, la búsqueda general `#data` introdujo severo sesgo debido a su homonimia con el álbum musical *"DATA"* de Tainy y Bad Bunny (canciones virales como *Mojabi Ghost*), así como contenido genérico de noticias y crímenes que diluían el propósito del análisis.
+- **Solución arquitectónica en Silver:** Se restringió la ingesta en Silver exclusivamente a los 5 términos especializados del nicho (`ingenieriadedatos`, `databricks`, `dataengineering`, `pyspark`, `dataengineer`). Esta regla positiva erradicó la necesidad de listas negras (`NOT IN`), garantizando un dataset 100% puro del ecosistema de Ingeniería de Datos.
 
 ### 🏆 Hallazgos Principales (Insights)
-- **Top Creadores por Likes:** Liderado legítimamente por educadores y profesionales del rubro como `@pablo.maxmaxdata` (947K likes), `@chartosaur` (546K likes), `@imelijahbutler` (363K likes), `@datachictiktok` (357K likes) y `@marytheanalyst` (294K likes).
-- **Concentración Regional:** Perú (`PE` con 138 videos), México (`MX` con 116), Estados Unidos (`US` con 116), España (`ES` con 83) y Reino Unido (`GB` con 81) concentran la producción de contenido técnico.
-- **Hashtags de Mayor Tracción:** `#ingenieriadedatos` (467 videos), `#data` técnico (273 videos), `#datascience` (258 videos), `#dataengineering` (212 videos) y `#dataengineer` (207 videos) dominan el ecosistema.
+- **Top Creadores por Likes:** Liderado por figuras del ecosistema como `@masana.xx` (188K likes), `@nataliefratto` (95K likes), `@itssimplyjordan` (40K likes), la cuenta oficial de `@airbytehq` (37K likes, herramienta líder de integración de datos) y `@sergi.data` (35K likes).
+- **Concentración Regional:** Perú (`PE` con 137 videos), México (`MX` con 114), Estados Unidos (`US` con 73), España (`ES` con 72) y Reino Unido (`GB` con 62) concentran la producción de contenido de ingeniería de datos.
+- **Hashtags de Mayor Tracción:** `#dataengineer`, `#databricks`, `#dataengineering`, `#datascience`, `#sql` y `#dataanalytics` dominan la conversación comunitaria.
 
 ### 🖥️ Dashboard Ejecutivo (Patrón F)
 - **Cabecera Horizontal Superior:** 4 Scorecards de KPIs clave (Totales y Promedios limpios).
