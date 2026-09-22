@@ -52,7 +52,7 @@ flowchart TD
 
 - **Plataforma Core:** Databricks Lakehouse Platform con Unity Catalog (`tiktok_data_eng`).
 - **Motor de Cómputo:** Apache Spark (PySpark) y Databricks SQL Warehouse.
-- **Almacenamiento:** Delta Lake con transacciones ACID y Liquid Clustering.
+- **Almacenamiento y Rendimiento:** Delta Lake con transacciones ACID, compactación controlada (`OPTIMIZE`) para consolidación de archivos Parquet y aprovechamiento de Delta Cache en memoria (evitando sobre-ingeniería de particionado en bajo volumen).
 - **Orquestación:** Databricks Workflows / Jobs (DAG con tareas concurrentes para dimensiones y secuencial para la tabla de hechos).
 - **Modelado Dimensional:** Modelo Estrella (Kimball) con claves sustitutas hash determinísticas (`row_hash` con SHA-256).
 - **Visualización:** Databricks AI/BI Dashboards (Lakeview) optimizado con Patrón F.
