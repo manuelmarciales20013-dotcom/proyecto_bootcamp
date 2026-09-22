@@ -1,0 +1,597 @@
+{
+  "datasets": [
+    {
+      "name": "ds_kpis",
+      "displayName": "KPIs Generales",
+      "queryLines": [
+        "SELECT\n",
+        "  total_videos,\n",
+        "  total_vistas_acumuladas,\n",
+        "  promedio_vistas_por_video,\n",
+        "  promedio_likes_por_video\n",
+        "FROM\n",
+        "  tiktok_data_eng.semantica.v_kpi_metricas_generales\n"
+      ]
+    },
+    {
+      "name": "ds_videos_region",
+      "displayName": "Videos por Región",
+      "queryLines": [
+        "SELECT\n",
+        "  region,\n",
+        "  cantidad_videos,\n",
+        "  total_vistas,\n",
+        "  total_likes\n",
+        "FROM\n",
+        "  tiktok_data_eng.semantica.v_videos_por_region\n",
+        "ORDER BY\n",
+        "  cantidad_videos DESC\n",
+        "LIMIT 5\n"
+      ]
+    },
+    {
+      "name": "ds_top5_autores",
+      "displayName": "Top 5 Autores con más Likes",
+      "queryLines": [
+        "SELECT\n",
+        "  author_username,\n",
+        "  author_nickname,\n",
+        "  total_likes,\n",
+        "  total_vistas,\n",
+        "  total_videos\n",
+        "FROM\n",
+        "  tiktok_data_eng.semantica.v_top5_autores_likes\n",
+        "ORDER BY\n",
+        "  total_likes DESC\n"
+      ]
+    },
+    {
+      "name": "ds_hashtags_vistos",
+      "displayName": "Hashtags con Videos más Vistos",
+      "queryLines": [
+        "SELECT\n",
+        "  hashtag,\n",
+        "  total_vistas_acumuladas,\n",
+        "  promedio_vistas_por_video,\n",
+        "  total_videos_con_hashtag\n",
+        "FROM\n",
+        "  tiktok_data_eng.semantica.v_hashtags_mas_vistos\n",
+        "ORDER BY\n",
+        "  total_vistas_acumuladas DESC\n",
+        "LIMIT 10\n"
+      ]
+    },
+    {
+      "name": "ds_hashtags_likeados",
+      "displayName": "Hashtags con Videos más Likeados",
+      "queryLines": [
+        "SELECT\n",
+        "  hashtag,\n",
+        "  record_likes_un_video,\n",
+        "  total_likes_acumulados,\n",
+        "  promedio_likes_por_video,\n",
+        "  total_videos_con_hashtag\n",
+        "FROM\n",
+        "  tiktok_data_eng.semantica.v_hashtags_mas_likeados\n",
+        "ORDER BY\n",
+        "  record_likes_un_video DESC\n",
+        "LIMIT 10\n"
+      ]
+    },
+    {
+      "name": "ds_nube_hashtags",
+      "displayName": "Frecuencia de Hashtags",
+      "queryLines": [
+        "SELECT\n",
+        "  hashtag,\n",
+        "  frecuencia_aparicion,\n",
+        "  peso_vistas,\n",
+        "  peso_likes\n",
+        "FROM\n",
+        "  tiktok_data_eng.semantica.v_nube_palabras_hashtags\n",
+        "ORDER BY\n",
+        "  frecuencia_aparicion DESC\n",
+        "LIMIT 15\n"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "7f9c7b86",
+      "displayName": "Dashboard Ejecutivo",
+      "layout": [
+        {
+          "widget": {
+            "name": "kpi-total-videos",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ds_kpis",
+                  "fields": [
+                    {
+                      "name": "total_videos",
+                      "expression": "`total_videos`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Total Videos Analizados",
+                  "fields": []
+                }
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "total_videos",
+                  "format": {
+                    "type": "number-plain",
+                    "abbreviation": "none"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "kpi-total-vistas",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ds_kpis",
+                  "fields": [
+                    {
+                      "name": "total_vistas_acumuladas",
+                      "expression": "`total_vistas_acumuladas`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Total Vistas Acumuladas",
+                  "fields": []
+                }
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "total_vistas_acumuladas",
+                  "format": {
+                    "type": "number-plain",
+                    "abbreviation": "compact",
+                    "decimalPlaces": {
+                      "type": "max",
+                      "places": 2
+                    }
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 0,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "kpi-promedio-vistas",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ds_kpis",
+                  "fields": [
+                    {
+                      "name": "promedio_vistas_por_video",
+                      "expression": "`promedio_vistas_por_video`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Promedio Vistas / Video (Media Recortada)",
+                  "fields": []
+                }
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "promedio_vistas_por_video",
+                  "format": {
+                    "type": "number-plain",
+                    "abbreviation": "compact",
+                    "decimalPlaces": {
+                      "type": "max",
+                      "places": 1
+                    }
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 9,
+            "y": 0,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "kpi-promedio-likes",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ds_kpis",
+                  "fields": [
+                    {
+                      "name": "promedio_likes_por_video",
+                      "expression": "`promedio_likes_por_video`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Promedio Likes / Video (Media Recortada)",
+                  "fields": []
+                }
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "promedio_likes_por_video",
+                  "format": {
+                    "type": "number-plain",
+                    "abbreviation": "compact",
+                    "decimalPlaces": {
+                      "type": "max",
+                      "places": 1
+                    }
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 0,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "chart-videos-por-region",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ds_videos_region",
+                  "fields": [
+                    {
+                      "name": "region",
+                      "expression": "`region`"
+                    },
+                    {
+                      "name": "cantidad_videos",
+                      "expression": "`cantidad_videos`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Top 5 Regiones con Mayor Producción de Videos"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "region",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "cantidad_videos",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 2,
+            "width": 12,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "chart-top5-autores",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ds_top5_autores",
+                  "fields": [
+                    {
+                      "name": "author_username",
+                      "expression": "`author_username`"
+                    },
+                    {
+                      "name": "total_likes",
+                      "expression": "`total_likes`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Top 5 Autores con Más Likes Acumulados"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "author_username",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "total_likes",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 6,
+            "width": 6,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "chart-hashtags-vistos",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ds_hashtags_vistos",
+                  "fields": [
+                    {
+                      "name": "hashtag",
+                      "expression": "`hashtag`"
+                    },
+                    {
+                      "name": "total_vistas_acumuladas",
+                      "expression": "`total_vistas_acumuladas`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Top 10 Hashtags con Videos Más Vistos"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "hashtag",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "total_vistas_acumuladas",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 6,
+            "width": 6,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "chart-hashtags-likeados",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ds_hashtags_likeados",
+                  "fields": [
+                    {
+                      "name": "hashtag",
+                      "expression": "`hashtag`"
+                    },
+                    {
+                      "name": "record_likes_un_video",
+                      "expression": "`record_likes_un_video`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Top Hashtags con Récord de Likes en un Video"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "hashtag",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "record_likes_un_video",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 11,
+            "width": 6,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "chart-frecuencia-hashtags",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ds_nube_hashtags",
+                  "fields": [
+                    {
+                      "name": "hashtag",
+                      "expression": "`hashtag`"
+                    },
+                    {
+                      "name": "frecuencia_aparicion",
+                      "expression": "`frecuencia_aparicion`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Frecuencia de Aparición de Hashtags (Nube Analítica)"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "hashtag",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "frecuencia_aparicion",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 11,
+            "width": 6,
+            "height": 5
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}

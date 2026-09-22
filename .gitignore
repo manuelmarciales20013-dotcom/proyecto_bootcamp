@@ -46,3 +46,5 @@ eda_columns.txt
 *.json
 !package.json
 !package-lock.json
+!src/Dashboards/*.json
+
