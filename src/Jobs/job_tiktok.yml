@@ -51,7 +51,7 @@ resources:
           notebook_task:
             notebook_path: /Workspace/Users/manuelmarciales20013@gmail.com/proyecto_personal/proyecto_bootcamp/src/ETL/Gold/ETL_fct_video_metricas
             source: WORKSPACE
-          description: Métricas puras, cálculo de engagement_rate y resolución de FKs
+          description: Métricas puras (reproducciones, likes, comentarios, shares) y resolución de FKs
       queue:
         enabled: true
       performance_target: PERFORMANCE_OPTIMIZED

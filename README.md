@@ -34,7 +34,7 @@ flowchart TD
         SILVER -->|SCD Tipo 0| D_FECHA["<code>gold.dim_fecha</code><br/>(Dimensión temporal)"]
         SILVER -->|SCD Tipo 1| D_HASH["<code>gold.dim_hashtag</code><br/>(Catálogo hashtags)"]
         SILVER -->|M:N Bridge| B_HASH["<code>gold.bridge_video_hashtag</code><br/>(video_id ↔ hashtag_id)"]
-        SILVER -->|Surrogate Key SHA-256| F_METRICAS["<code>gold.fct_video_metricas</code><br/>(Hechos: plays, likes, shares, engagement)"]
+        SILVER -->|Surrogate Key SHA-256| F_METRICAS["<code>gold.fct_video_metricas</code><br/>(Hechos: plays, likes, comments, shares)"]
     end
     
     subgraph SEMANTICA_LAYER ["🧠 Capa Semántica"]
@@ -112,7 +112,6 @@ flowchart TD
 | **Total de Likes Acumulados** | `88,935,706` (~88.9 Millones) |
 | **Media Recortada de Vistas por Video** | `534,259` reproducciones *(vs. 791K sesgada)* |
 | **Media Recortada de Likes por Video** | `57,267` likes |
-| **Tasa de Engagement Promedio** | `10.28%` |
 
 ### 🏆 Hallazgos Principales (Insights)
 - **Top Creadores por Likes:** Liderado por cuentas especializadas en datos y tech como `@yuvaltheterrible` (1.85M likes), `@pablo.maxmaxdata` (1.78M likes) y `@naxride` (1.51M likes).
@@ -120,6 +119,6 @@ flowchart TD
 - **Hashtags de Mayor Tracción:** `#data` y `#fyp` acumulan el mayor volumen total de vistas, mientras que etiquetas de nicho como `#ingenieriadedatos` y `#datascience` dominan la frecuencia de aparición comunitaria.
 
 ### 🖥️ Dashboard Ejecutivo (Patrón F)
-- **Cabecera Horizontal Superior:** 5 Scorecards de KPIs clave (Promedios y Totales).
-- **Banda Intermedia:** Gráfico de barras de Producción de Videos por Región Geográfica (`US`, `MX`, `PE`, etc.).
+- **Cabecera Horizontal Superior:** 4 Scorecards de KPIs clave (Totales y Promedios recortados).
+- **Banda Intermedia:** Gráfico de barras del Top 5 de Regiones Geográficas con mayor volumen de videos (`US`, `MX`, `PE`, `GB`, `ES`).
 - **Bloque Vertical Inferior:** Rankings de Autores, Hashtags con más vistas, Hashtags récord de likes y Nube de términos.
